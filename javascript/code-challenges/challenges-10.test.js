@@ -124,7 +124,7 @@ Write a function named salesData that uses forEach to iterate over the hourlySal
 const salesData = (hours, data) => {
   // Solution code here...
   let results = [];
-  
+
   for (let i = 0; i < hours.length; i++) {
     let salesPerHour = {
       sales: "",
@@ -136,7 +136,6 @@ const salesData = (hours, data) => {
   }
   return results;
 };
-console.log(salesData(hoursOpen, grandTotal(cookieStores)));
 /* ------------------------------------------------------------------------------------------------
 CHALLENGE 6
 
@@ -172,8 +171,18 @@ const errands = [
 
 const howManyTreats = (arr) => {
   // Solution code here...
+  let treats;
+  arr.forEach((element) => {
+    if (element.store == "Pet store") {
+      element.items.forEach((ele) => {
+        if (ele.name == "Treats") {
+          treats = ele.quantity;
+        }
+      });
+    }
+  });
+  return treats;
 };
-
 /* ------------------------------------------------------------------------------------------------
 CHALLENGE 7 - Stretch Goal
 
@@ -194,8 +203,24 @@ The top row of the board is considered row zero and row numbers increase as they
 
 const battleship = (board, row, col) => {
   //  Solution code here...
+  let polit;
+  board.forEach((element, rowIndex) => {
+    if (row == rowIndex) {
+      element.forEach((ele, columnIndex) => {
+        if (col == columnIndex) {
+          if (ele == "#") {
+            console.log("deep hit");
+            polit = "hit";
+          } else {
+            console.log("deep miss");
+            polit = "miss";
+          }
+        }
+      });
+    }
+  });
+  return polit;
 };
-
 /* ------------------------------------------------------------------------------------------------
 CHALLENGE 8 - Stretch Goal
 
@@ -206,8 +231,14 @@ For example, the following input returns a product of 720: [[1,2], [3,4], [5,6]]
 
 const calculateProduct = (numbers) => {
   // Solution code here...
+  let result = 1;
+  numbers.forEach((element) => {
+    element.forEach((ele) => {
+      result = result * ele;
+    });
+  });
+  return result;
 };
-
 /* ------------------------------------------------------------------------------------------------
 CHALLENGE 9 - Stretch Goal
 
@@ -226,8 +257,16 @@ const weeklyTemperatures = [
 
 const averageDailyTemperature = (weather) => {
   // Solution code here...
+  let sum = 0;
+  let count = 0;
+  weather.forEach((element) => {
+    element.forEach((ele) => {
+      sum = sum + ele;
+      count++;
+    });
+  });
+  return sum / count;
 };
-
 /* ------------------------------------------------------------------------------------------------
 CHALLENGE 10 - Stretch Goal
 
@@ -247,8 +286,21 @@ let lowestWeeklyTemperatureData = [
 
 const lowestWeeklyAverage = (weather) => {
   // Solution code here...
+  let lowest = 1000;
+  weather.forEach((element) => {
+    let sum = 0;
+    let count = 0;
+    element.forEach((ele) => {
+      sum = sum + ele;
+      count++;
+    });
+    let average = sum / count;
+    if (average < lowest) {
+      lowest = average;
+    }
+  });
+  return Math.floor(lowest);
 };
-
 /* ------------------------------------------------------------------------------------------------
 CHALLENGE 11 - Stretch Goal
 
@@ -263,8 +315,21 @@ For example, excel('1,1,1\n4,4,4\n9,9,9') returns [3, 12, 27].
 
 const excel = (str) => {
   // Solution code here...
+  let parsedArray = [];
+  let results = [];
+  let splitted = str.split("\n");
+  splitted.forEach((element) => {
+    parsedArray.push(element.split(","));
+  });
+  parsedArray.forEach((element) => {
+    let sum = 0;
+    element.forEach(ele => {
+      sum = sum + Number(ele);
+    });
+    results.push(sum);
+  });
+  return results;// :)
 };
-
 /* ------------------------------------------------------------------------------------------------
 TESTS
 
@@ -276,107 +341,146 @@ Run your tests from the console: jest challenge-12.test.js
 
 ------------------------------------------------------------------------------------------------ */
 
-describe('Testing challenge 1', () => {
-  test('it should return the last 10 characters of a string as an array', () => {
-    expect(returnTen('hello world')).toStrictEqual(['e','l','l','o',' ','w','o','r','l','d']);
-    expect(returnTen('world')).toStrictEqual(['w','o','r','l','d']);
+describe("Testing challenge 1", () => {
+  test("it should return the last 10 characters of a string as an array", () => {
+    expect(returnTen("hello world")).toStrictEqual([
+      "e",
+      "l",
+      "l",
+      "o",
+      " ",
+      "w",
+      "o",
+      "r",
+      "l",
+      "d",
+    ]);
+    expect(returnTen("world")).toStrictEqual(["w", "o", "r", "l", "d"]);
   });
 });
 
-describe('Testing challenge 2', () => {
-  test('It should return the max value', () => {
-    expect(findMax([[13,24,24,2], [2,5,6], [2,3]])).toStrictEqual(24);
+describe("Testing challenge 2", () => {
+  test("It should return the max value", () => {
+    expect(
+      findMax([
+        [13, 24, 24, 2],
+        [2, 5, 6],
+        [2, 3],
+      ])
+    ).toStrictEqual(24);
   });
 });
 
-describe('Testing challenge 3', () => {
-  test('It should return the total sum', () => {
-    expect(totalSum([[13,24,24,2], [2,5,6], [2,3]])).toStrictEqual(81);
+describe("Testing challenge 3", () => {
+  test("It should return the total sum", () => {
+    expect(
+      totalSum([
+        [13, 24, 24, 2],
+        [2, 5, 6],
+        [2, 3],
+      ])
+    ).toStrictEqual(81);
     expect(totalSum([])).toStrictEqual(0);
   });
 });
 
-describe('Testing challenge 4', () => {
-  test('It should add the hourly totals array', () => {
-    expect(grandTotal(cookieStores)).toStrictEqual([88, 153, 252, 286, 139, 161, 145, 232, 276, 207, 161, 169]);
+describe("Testing challenge 4", () => {
+  test("It should add the hourly totals array", () => {
+    expect(grandTotal(cookieStores)).toStrictEqual([
+      88, 153, 252, 286, 139, 161, 145, 232, 276, 207, 161, 169,
+    ]);
   });
 });
 
-describe('Testing challenge 5', () => {
-  test('It should create an object of data for each store', () => {
+describe("Testing challenge 5", () => {
+  test("It should create an object of data for each store", () => {
     expect(salesData(hoursOpen, grandTotal(cookieStores))).toStrictEqual([
-      { sales: '88 cookies', time: '9 a.m.' },
-      { sales: '153 cookies', time: '10 a.m.' },
-      { sales: '252 cookies', time: '11 a.m.' },
-      { sales: '286 cookies', time: '12 p.m.' },
-      { sales: '139 cookies', time: '1 p.m.' },
-      { sales: '161 cookies', time: '2 p.m.' },
-      { sales: '145 cookies', time: '3 p.m.' },
-      { sales: '232 cookies', time: '4 p.m.' },
-      { sales: '276 cookies', time: '5 p.m.' },
-      { sales: '207 cookies', time: '6 p.m.' },
-      { sales: '161 cookies', time: '7 p.m.' },
-      { sales: '169 cookies', time: '8 p.m.' }
+      { sales: "88 cookies", time: "9 a.m." },
+      { sales: "153 cookies", time: "10 a.m." },
+      { sales: "252 cookies", time: "11 a.m." },
+      { sales: "286 cookies", time: "12 p.m." },
+      { sales: "139 cookies", time: "1 p.m." },
+      { sales: "161 cookies", time: "2 p.m." },
+      { sales: "145 cookies", time: "3 p.m." },
+      { sales: "232 cookies", time: "4 p.m." },
+      { sales: "276 cookies", time: "5 p.m." },
+      { sales: "207 cookies", time: "6 p.m." },
+      { sales: "161 cookies", time: "7 p.m." },
+      { sales: "169 cookies", time: "8 p.m." },
     ]);
 
-    expect(salesData(hoursOpen, grandTotal(cookieStores)).length).toStrictEqual(hoursOpen.length);
+    expect(salesData(hoursOpen, grandTotal(cookieStores)).length).toStrictEqual(
+      hoursOpen.length
+    );
   });
 });
 
-describe('Testing challenge 6', () => {
-  test('It should return the number 24', () => {
+describe("Testing challenge 6", () => {
+  test("It should return the number 24", () => {
     expect(howManyTreats(errands)).toStrictEqual(24);
   });
 });
 
-xdescribe('Testing challenge 7', () => {
+describe("Testing challenge 7", () => {
   const battleshipData = [
-    ['#', ' ', '#', ' '],
-    ['#', ' ', '#', ' '],
-    ['#', ' ', ' ', ' '],
-    [' ', ' ', '#', '#'],
+    ["#", " ", "#", " "],
+    ["#", " ", "#", " "],
+    ["#", " ", " ", " "],
+    [" ", " ", "#", "#"],
   ];
 
   test('It should return "hit" when it hits a boat', () => {
-    expect(battleship(battleshipData, 0, 0)).toStrictEqual('hit');
-    expect(battleship(battleshipData, 1, 0)).toStrictEqual('hit');
+    expect(battleship(battleshipData, 0, 0)).toStrictEqual("hit");
+    expect(battleship(battleshipData, 1, 0)).toStrictEqual("hit");
   });
 
   test('It should return "miss" when it doesn\'t hit a boat', () => {
-    expect(battleship(battleshipData, 0, 1)).toStrictEqual('miss');
-    expect(battleship(battleshipData, 3, 0)).toStrictEqual('miss');
+    expect(battleship(battleshipData, 0, 1)).toStrictEqual("miss");
+    expect(battleship(battleshipData, 3, 0)).toStrictEqual("miss");
   });
 });
 
-xdescribe('Testing challenge 8', () => {
-  test('It should multiply all the numbers together', () => {
-    expect(calculateProduct([[1, 2], [3, 4], [5, 6]])).toStrictEqual(720);
+describe("Testing challenge 8", () => {
+  test("It should multiply all the numbers together", () => {
+    expect(
+      calculateProduct([
+        [1, 2],
+        [3, 4],
+        [5, 6],
+      ])
+    ).toStrictEqual(720);
   });
 
-  test('It should return zero if there are any zeroes in the data', () => {
-    expect(calculateProduct([[2, 3, 4, 6, 0], [4, 3, 7], [2, 4, 6]])).toStrictEqual(0);
+  test("It should return zero if there are any zeroes in the data", () => {
+    expect(
+      calculateProduct([
+        [2, 3, 4, 6, 0],
+        [4, 3, 7],
+        [2, 4, 6],
+      ])
+    ).toStrictEqual(0);
   });
-  test('It should work even if some of the arrays contain no numbers', () => {
+  test("It should work even if some of the arrays contain no numbers", () => {
     expect(calculateProduct([[1, 2], [], [3, 4, 5]])).toStrictEqual(120);
   });
 });
 
-xdescribe('Testing challenge 9', () => {
-  test('It should calculate and return the average temperature of the data set', () => {
+describe("Testing challenge 9", () => {
+  test("It should calculate and return the average temperature of the data set", () => {
     expect(averageDailyTemperature(weeklyTemperatures)).toStrictEqual(60.25);
   });
 });
 
-xdescribe('Testing challenge 10', () => {
-  test('It should return the lowest weekly average temperature within the data set', () => {
+describe("Testing challenge 10", () => {
+  test("It should return the lowest weekly average temperature within the data set", () => {
     expect(lowestWeeklyAverage(weeklyTemperatures)).toStrictEqual(57);
     expect(lowestWeeklyAverage(lowestWeeklyTemperatureData)).toStrictEqual(46);
   });
 });
 
-xdescribe('Testing challenge 11', () => {
-  test('It should return the total count for each row', () => {
-    let result = excel('1,1,1\n4,4,4\n9,9,9');
+xdescribe("Testing challenge 11", () => {
+  test("It should return the total count for each row", () => {
+    let result = excel("1,1,1\n4,4,4\n9,9,9");
     expect(result.length).toStrictEqual(3);
     expect(result[0]).toStrictEqual(3);
     expect(result[1]).toStrictEqual(12);
