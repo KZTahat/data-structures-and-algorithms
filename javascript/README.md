@@ -87,4 +87,4 @@ Note that when you check your code into GitHub, all of your tests will automatic
 
 
 ## 401-code-challenges README files Links:
-- code-challenge-1: 
+- code-challenge-1: https://github.com/KZTahat/data-structures-and-algorithms/blob/array-reverse/javascript/401-code-challenges/README.md
